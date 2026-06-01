@@ -130,6 +130,36 @@ body {
     image-rendering: pixelated;
 }
 
+#food-tracker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 255, 204, 0.05);
+    padding: 10px;
+    border: 1px solid rgba(0, 255, 204, 0.2);
+    border-top: 4px solid var(--primary);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    min-width: 100px;
+}
+
+#food-tracker .label {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+#food-face-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 .overlay {
     position: absolute;
     top: 0;

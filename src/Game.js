@@ -8,7 +8,7 @@ import { Snake } from './Snake.js';
 import { Food } from './Food.js';
 import { CameraManager } from './CameraManager.js';
 import { MapManager } from './MapManager.js';
-import { DIRECTIONS, INITIAL_SPEED, MIN_SPEED, SPEED_INCREMENT } from './Constants.js';
+import { DIRECTIONS, INITIAL_SPEED, MIN_SPEED, SPEED_INCREMENT, COLORS } from './Constants.js';
 
 export class Game {
     constructor() {
@@ -22,6 +22,7 @@ export class Game {
             console.log("Canvas found:", this.canvas);
 
             this.mapCanvas = document.getElementById('mini-map-canvas');
+            this.foodIndicator = document.getElementById('food-face-indicator');
             
             this.renderer = new THREE.WebGLRenderer({ 
                 canvas: this.canvas, 
@@ -295,6 +296,16 @@ export class Game {
     updateUI() {
         document.getElementById('score-value').innerText = this.score.toString().padStart(3, '0');
         document.getElementById('high-score-value').innerText = this.highScore.toString().padStart(3, '0');
+
+        if (this.food && this.foodIndicator) {
+            const faceColors = [
+                COLORS.FRONT, COLORS.BACK, COLORS.TOP, COLORS.BOTTOM, COLORS.RIGHT, COLORS.LEFT
+            ];
+            const color = faceColors[this.food.position.face];
+            const hexColor = `#${color.toString(16).padStart(6, '0')}`;
+            this.foodIndicator.style.backgroundColor = hexColor;
+            this.foodIndicator.style.boxShadow = `0 0 20px ${hexColor}88`;
+        }
     }
 
     animate(time) {
