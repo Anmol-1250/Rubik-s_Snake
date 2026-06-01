@@ -1,3 +1,6 @@
+# Rubik-s_Snake
+Retro games with Modern touch  
+
 # Rubik Snake 3D
 
 A 3D Snake game played on the surface of a 4x4 Rubik's Cube.
