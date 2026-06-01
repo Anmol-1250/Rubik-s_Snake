@@ -7,7 +7,6 @@ import { Cube } from './Cube.js';
 import { Snake } from './Snake.js';
 import { Food } from './Food.js';
 import { CameraManager } from './CameraManager.js';
-import { MapManager } from './MapManager.js';
 import { DIRECTIONS, INITIAL_SPEED, MIN_SPEED, SPEED_INCREMENT, COLORS } from './Constants.js';
 
 export class Game {
@@ -21,7 +20,6 @@ export class Game {
             }
             console.log("Canvas found:", this.canvas);
 
-            this.mapCanvas = document.getElementById('mini-map-canvas');
             this.foodIndicator = document.getElementById('food-face-indicator');
             
             this.renderer = new THREE.WebGLRenderer({ 
@@ -163,7 +161,6 @@ export class Game {
             
             this.renderer.setSize(width, height);
             if (this.composer) this.composer.setSize(width, height);
-            if (this.mapManager) this.mapManager.resize();
         });
 
         window.addEventListener('keydown', (e) => {
@@ -246,10 +243,6 @@ export class Game {
         this.snake = new Snake(this.scene, this.cube);
         this.food = new Food(this.scene, this.cube, this.selectedGridSize);
         this.cameraManager = new CameraManager(this.camera, this.cube);
-        
-        if (this.mapCanvas) {
-            this.mapManager = new MapManager(this.mapCanvas, this.selectedGridSize);
-        }
 
         try {
             if (!this.composer) this.initPostProcessing();
@@ -341,7 +334,6 @@ export class Game {
 
         if (this.food) this.food.update(time / 1000);
         if (this.cameraManager) this.cameraManager.update();
-        if (this.mapManager) this.mapManager.draw(this.snake, this.food);
         this.updateParticles();
         
         if (this.composer) {
