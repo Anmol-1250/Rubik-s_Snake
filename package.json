@@ -1,0 +1,12 @@
+{
+  "name": "rubik-snake-3d",
+  "version": "1.0.0",
+  "description": "A 3D Rubik Snake game",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}

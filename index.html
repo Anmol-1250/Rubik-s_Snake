@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rubik's Snake 3D</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="debug-log" style="position:fixed; bottom:10px; left:10px; background:rgba(0,0,0,0.7); color:#0f0; font-family:monospace; font-size:10px; z-index:10000; pointer-events:none; max-height:100px; overflow:hidden;"></div>
+        <canvas id="game-canvas"></canvas>
+        <div id="scanline-overlay"></div>
+        
+        <div id="ui-layer">
+            <div id="hud">
+                <div class="score-container">
+                    <span class="label">SCORE</span>
+                    <span id="score-value">000</span>
+                </div>
+                <div class="score-container">
+                    <span class="label">BEST</span>
+                    <span id="high-score-value">000</span>
+                </div>
+            </div>
+
+            <div id="start-screen" class="overlay">
+                <h1>Rubik's Snake</h1>
+                <p>Select Cube Size</p>
+                <div class="size-selector">
+                    <button class="size-btn" data-size="3">3x3</button>
+                    <button class="size-btn active" data-size="4">4x4</button>
+                    <button class="size-btn" data-size="5">5x5</button>
+                </div>
+                <button id="start-button">START GAME</button>
+                <div class="controls-hint">
+                    <p>Use Arrow Keys to Turn</p>
+                    <p>Space to Reset Camera</p>
+                </div>
+            </div>
+
+            <div id="game-over-screen" class="overlay hidden">
+                <h2>GAME OVER</h2>
+                <div class="final-score">
+                    <p>FINAL SCORE</p>
+                    <span id="final-score-value">0</span>
+                </div>
+                <div class="game-over-buttons">
+                    <button id="restart-button">RETRY</button>
+                    <button id="menu-button">MENU</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="src/main.js"></script>
+    <script>
+        const debugLog = document.getElementById('debug-log');
+        function log(msg, isError = false) {
+            const div = document.createElement('div');
+            div.textContent = `> ${msg}`;
+            if (isError) div.style.color = '#f00';
+            debugLog.appendChild(div);
+            console.log(msg);
+        }
+        window.onerror = (m, s, l) => log(`Error: ${m} at ${l}`, true);
+        log('Browser initialized. Protocol: ' + window.location.protocol);
+
+        // FALLBACK: If the module above fails (e.g. file:// protocol), 
+        // this script will handle the button click to explain why.
+        document.getElementById('start-button').addEventListener('click', function() {
+            if (typeof window.gameLoaded === 'undefined') {
+                log('Start button clicked, but game not loaded.', true);
+                alert('THE GAME HAS NOT LOADED YET.\n\nReason: You opened the .html file directly. Browsers block 3D games for security unless they run on a "Server".\n\nTO FIX THIS:\nDouble-click the "Play_Game.bat" file in this folder to start the game automatically!');
+            }
+        });
+
+        // Check if running via file:// protocol
+        if (window.location.protocol === 'file:') {
+            alert('CRITICAL: This game uses ES Modules and requires a local server to run.\n\nPlease open this folder in VS Code and use "Live Server", or run "python -m http.server" in this directory.');
+            const warning = document.createElement('div');
+            warning.style.position = 'fixed';
+            warning.style.top = '0';
+            warning.style.left = '0';
+            warning.style.width = '100%';
+            warning.style.padding = '20px';
+            warning.style.background = 'red';
+            warning.style.color = 'white';
+            warning.style.textAlign = 'center';
+            warning.style.zIndex = '9999';
+            warning.innerHTML = '<strong>RUNNING LOCALLY?</strong> This game requires a local server. Please use VS Code Live Server or Python.';
+            document.body.appendChild(warning);
+        }
+    </script>
+</body>
+</html>
