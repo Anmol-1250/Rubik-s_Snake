@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo ==========================================
-echo    RUBIK SNAKE 3D - SERVER LAUNCHER
+echo    Rubik's Snake 3D - SERVER LAUNCHER
 echo ==========================================
 echo.
 
